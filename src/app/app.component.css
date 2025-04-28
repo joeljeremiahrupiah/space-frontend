@@ -1,0 +1,95 @@
+:host {
+  --primary-color: #007bff;
+  --border-color: #dee2e6;
+  --header-bg: #ffffff;
+  --header-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --link-color: #343a40;
+  --link-hover-color: var(--primary-color);
+}
+
+.app-header {
+  background-color: var(--header-bg);
+  box-shadow: var(--header-shadow);
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.navbar-brand {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--link-color);
+  font-weight: 500;
+  padding: 5px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-bottom-color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--link-hover-color);
+}
+
+.nav-links a.active-link {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: var(--link-color);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 5px 0;
+  font-size: 1em;
+  font-family: inherit;
+}
+
+.logout-button:hover {
+  color: var(--link-hover-color);
+}
+
+.main-content {
+  padding-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1.3em;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  .nav-links a,
+  .logout-button {
+    font-size: 0.9em;
+  }
+
+  .app-header {
+    padding: 0 10px;
+  }
+}

@@ -1,0 +1,119 @@
+<div class="page-container">
+
+  <aside class="filter-container">
+    <h3><i class="icon-filter"></i> Filter Spaces</h3>
+    <form (ngSubmit)="applyFilters()" #filterForm="ngForm">
+
+      <fieldset>
+        <legend>Basic Info</legend>
+        <div class="filter-group">
+          <label for="location">Location / Name Keyword:</label>
+          <input type="text" id="location" name="locationKeyword" [(ngModel)]="searchCriteria.locationKeyword"
+            placeholder="e.g., Floor 1, Conference">
+        </div>
+        <div class="filter-group">
+          <label for="capacity">Min Capacity:</label>
+          <input type="number" id="capacity" name="minCapacity" min="1" [(ngModel)]="searchCriteria.minCapacity"
+            placeholder="e.g., 4">
+        </div>
+        <div class="filter-group">
+          <label for="maxPrice">Max Price/Hour:</label>
+          <input type="number" id="maxPrice" name="maxPricePerHour" min="0" step="0.01"
+            [(ngModel)]="searchCriteria.maxPricePerHour" placeholder="e.g., 50.00">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Space Type</legend>
+        <div class="filter-group checkbox-group">
+          <label *ngFor="let typeKey of objectKeys(typeSelection)">
+            <input type="checkbox" name="type-{{typeKey}}" [(ngModel)]="typeSelection[typeKey]">
+            {{ typeKey }}
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Required Amenities</legend>
+        <div class="filter-group">
+          <div *ngIf="isLoadingAmenities">Loading amenities...</div>
+          <div *ngIf="!isLoadingAmenities && allAmenities.length > 0" class="checkbox-group">
+            <label *ngFor="let amenity of allAmenities">
+              <input type="checkbox" name="amenity-{{amenity.name}}" [(ngModel)]="amenitySelection[amenity.name]">
+              {{ amenity.name }}
+            </label>
+          </div>
+          <div *ngIf="!isLoadingAmenities && allAmenities.length === 0">No amenities defined.</div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Availability</legend>
+        <div class="filter-group date-group">
+          <label for="startTime">From:</label>
+          <input type="datetime-local" id="startTime" name="desiredStartTime" [min]="minDateTime"
+            [(ngModel)]="searchCriteria.desiredStartTime">
+        </div>
+        <div class="filter-group date-group">
+          <label for="endTime">To:</label>
+          <input type="datetime-local" id="endTime" name="desiredEndTime" [min]="minDateTime"
+            [(ngModel)]="searchCriteria.desiredEndTime">
+        </div>
+      </fieldset>
+
+      <div class="filter-actions">
+        <button class="button-primary" type="submit" [disabled]="filterForm.invalid || isLoadingSpaces">
+          <i class="icon-search"></i> Apply Filters
+        </button>
+        <!-- <button type="button" class="button-secondary" (click)="resetFilters()">Reset</button> -->
+      </div>
+
+    </form>
+  </aside>
+
+  <main class="results-container">
+    <h2>Available Spaces</h2>
+    <hr>
+
+    <div *ngIf="isLoadingSpaces" class="loading-indicator">
+      <p>Loading spaces...</p>
+    </div>
+    <div *ngIf="error && !isLoadingSpaces" class="error-message">
+      <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="!isLoadingSpaces && !error">
+      <div *ngIf="spaces.length > 0; else noSpaces" class="space-list-container">
+        <div *ngFor="let space of spaces" class="space-card">
+          <div class="space-card-image">
+            <img *ngIf="space.imageUrl" [src]="space.imageUrl" alt="{{ space.name }}">
+            <img *ngIf="!space.imageUrl" src="assets/images/placeholder.png" alt="Placeholder Image">
+          </div>
+          <div class="space-card-content">
+            <h3>{{ space.name }}</h3>
+            <div class="space-meta">
+              <span><i class="icon-type"></i> {{ space.type }}</span>
+              <span><i class="icon-capacity"></i> Cap: {{ space.capacity }}</span>
+              <span><i class="icon-price"></i> ${{ space.pricePerHour }}/hr</span>
+            </div>
+            <p class="space-location"><i class="icon-location"></i> {{ space.locationDescription }}</p>
+
+            <div *ngIf="space.amenities && space.amenities.length > 0" class="amenities">
+              <span *ngFor="let amenity of space.amenities" class="amenity-tag">
+                {{ amenity.name }}
+              </span>
+            </div>
+            <p *ngIf="space.description" class="space-description">{{ space.description }}</p>
+            <button class="button-primary button-book" [routerLink]="['/book', space.id]">
+              Book Now
+            </button>
+          </div>
+        </div>
+      </div>
+      <ng-template #noSpaces>
+        <p class="no-results">No spaces found matching your criteria.</p>
+      </ng-template>
+    </div>
+  </main>
+
+</div>

@@ -1,0 +1,52 @@
+<div class="my-bookings-container">
+  <h2>My Bookings</h2>
+
+  <div *ngIf="isLoading" class="loading-indicator">
+    <p>Loading your bookings...</p>
+  </div>
+
+  <div *ngIf="error && !isLoading" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="cancelSuccess" class="success-message">
+    {{ cancelSuccess }}
+  </div>
+  <div *ngIf="cancelError" class="error-message">
+    {{ cancelError }}
+  </div>
+
+  <div *ngIf="!isLoading && !error && (bookings$ | async) as bookings">
+    <div *ngIf="bookings.length > 0; else noBookingsFound">
+      <div class="booking-list">
+        <div *ngFor="let booking of bookings" class="booking-card" [ngClass]="'status-' + booking.status.toLowerCase()">
+          <div class="booking-card-header">
+            <h3>{{ booking.spaceName }}</h3>
+            <span class="booking-status">{{ booking.status }}</span>
+          </div>
+          <div class="booking-card-body">
+            <p><strong>Date:</strong> {{ booking.startTime | date:'mediumDate' }}</p>
+            <p><strong>Time:</strong> {{ booking.startTime | date:'shortTime' }} - {{ booking.endTime | date:'shortTime'
+              }}</p>
+            <p><strong>Price:</strong> ${{ booking.totalPrice | number:'1.2-2' }}</p>
+            <p><strong>Booked On:</strong> {{ booking.createdAt | date:'short' }}</p>
+          </div>
+          <div class="booking-card-actions">
+            <button *ngIf="isCancellable(booking)" class="button-danger" (click)="cancelBooking(booking.id)"
+              [disabled]="cancellingBookingId === booking.id">
+              {{ cancellingBookingId === booking.id ? 'Cancelling...' : 'Cancel Booking' }}
+            </button>
+            <span *ngIf="!isCancellable(booking) && booking.status === 'CONFIRMED'" class="info-text">
+              (Cannot cancel past/started bookings)
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noBookingsFound>
+      <p class="no-results">You haven't made any bookings yet.</p>
+      <a routerLink="/">Find a space to book!</a>
+    </ng-template>
+  </div>
+
+</div>

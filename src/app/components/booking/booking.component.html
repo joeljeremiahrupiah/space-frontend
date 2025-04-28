@@ -1,0 +1,77 @@
+<div class="booking-page-container">
+  <h2>Book Your Space</h2>
+
+  <div *ngIf="isLoadingSpace" class="loading-indicator">
+    <p>Loading space details...</p>
+  </div>
+
+  <div *ngIf="!isLoadingSpace && spaceDetails">
+    <div class="space-summary-card">
+      <img *ngIf="spaceDetails.imageUrl" [src]="spaceDetails.imageUrl" alt="{{ spaceDetails.name }}">
+      <img *ngIf="!spaceDetails.imageUrl" src="assets/images/placeholder.png" alt="Placeholder Image">
+      <div class="summary-content">
+        <h3>{{ spaceDetails.name }}</h3>
+        <p><i class="icon-location"></i> {{ spaceDetails.locationDescription }}</p>
+        <p><i class="icon-price"></i> ${{ spaceDetails.pricePerHour }}/hour</p>
+      </div>
+    </div>
+    <hr>
+
+    <div *ngIf="!isLoggedIn" class="auth-prompt">
+      <h3>Please Login or Register</h3>
+      <p>You need to be logged in to complete your booking.</p>
+      <div class="auth-buttons">
+        <button class="button-primary" (click)="navigateToLogin()">Login</button>
+        <button class="button-secondary" (click)="navigateToRegister()">Register</button>
+      </div>
+    </div>
+
+    <div *ngIf="isLoggedIn" class="booking-form-container">
+      <h3>Select Your Time</h3>
+      <form (ngSubmit)="confirmBooking()" #bookingForm="ngForm">
+
+        <div class="form-group">
+          <label for="startTime">Start Time:</label>
+          <input type="datetime-local" id="startTime" name="startTime" required [(ngModel)]="bookingRequest.startTime"
+            #startTimeControl="ngModel" [min]="minDateTime"
+            [ngClass]="{ 'is-invalid': startTimeControl.invalid && startTimeControl.touched }">
+          <div *ngIf="startTimeControl.invalid && startTimeControl.touched" class="invalid-feedback">
+            Start time is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="endTime">End Time:</label>
+          <input type="datetime-local" id="endTime" name="endTime" required [(ngModel)]="bookingRequest.endTime"
+            #endTimeControl="ngModel" [min]="minDateTime"
+            [ngClass]="{ 'is-invalid': endTimeControl.invalid && endTimeControl.touched }">
+          <div *ngIf="endTimeControl.invalid && endTimeControl.touched" class="invalid-feedback">
+            End time is required.
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="button-primary button-confirm" [disabled]="bookingForm.invalid || isBooking">
+            {{ isBooking ? 'Processing...' : 'Confirm & Book' }}
+          </button>
+        </div>
+
+        <div *ngIf="bookingSuccess" class="success-message">
+          Booking confirmed successfully!
+        </div>
+
+        <div *ngIf="bookingError" class="error-message server-error">
+          {{ bookingError }}
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- Error Loading Space Details -->
+  <div *ngIf="!isLoadingSpace && !spaceDetails" class="error-message">
+    <p>{{ bookingError || 'Could not load space details.' }}</p>
+    <a routerLink="/">Go back to spaces</a>
+  </div>
+
+</div> <!-- End booking-page-container -->

@@ -1,0 +1,327 @@
+/* ****** FILE: space-list.component.css ****** */
+
+/* Basic Variables (Optional but good practice) */
+:host {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --light-gray: #f8f9fa;
+  --medium-gray: #e9ecef;
+  --dark-gray: #6c757d;
+  --text-color: #343a40;
+  --border-color: #dee2e6;
+  --border-radius: 0.375rem; /* Use consistent border radius */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Overall Page Layout (Desktop First) */
+.page-container {
+  display: grid;
+  grid-template-columns: 280px 1fr; /* Fixed width filter sidebar, flexible results */
+  gap: 30px;
+  padding: 20px;
+  max-width: 1400px; /* Optional max width */
+  margin: 0 auto; /* Center the container */
+}
+
+/* Filter Sidebar */
+.filter-container {
+  background-color: #fff; /* White background */
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  align-self: start; /* Align to top of grid cell */
+}
+
+.filter-container h3 {
+  font-size: 1.2em;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: var(--text-color);
+  /* Optional: Add icon styles */
+}
+
+/* Styling for fieldset/legend for better grouping */
+fieldset {
+  border: none; /* Remove default fieldset border */
+  padding: 0;
+  margin: 0 0 20px 0; /* Margin below each group */
+  border-top: 1px solid var(--medium-gray); /* Separator line */
+  padding-top: 15px;
+}
+fieldset:first-of-type {
+    border-top: none; /* No top border for the first group */
+    padding-top: 0;
+}
+
+legend {
+  font-weight: 600; /* Semibold */
+  font-size: 0.9em;
+  padding: 0 5px; /* Spacing around legend text */
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.filter-group {
+  margin-bottom: 15px;
+}
+
+.filter-group label:not(.checkbox-group label) { /* Style labels for inputs, not checkboxes */
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500; /* Medium weight */
+  font-size: 0.85em;
+  color: var(--dark-gray);
+}
+
+.filter-group input[type="text"],
+.filter-group input[type="number"],
+.filter-group input[type="datetime-local"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+  font-size: 0.9em;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.filter-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Focus ring */
+    outline: none;
+}
+
+/* Checkbox Styling */
+.checkbox-group {
+  display: flex;
+  flex-direction: column; /* Stack checkboxes vertically */
+  gap: 8px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  font-size: 0.9em;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 8px;
+  width: 1em;
+  height: 1em;
+  accent-color: var(--primary-color);
+}
+
+/* Filter Actions */
+.filter-actions {
+    margin-top: 20px;
+    border-top: 1px solid var(--medium-gray);
+    padding-top: 20px;
+}
+
+/* General Button Styles */
+.button-primary, .button-secondary {
+  display: inline-block;
+  font-weight: 500;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 10px 15px;
+  font-size: 0.95em;
+  border-radius: var(--border-radius);
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  width: 100%; /* Make button full width of filter container */
+}
+
+.button-primary {
+  color: #fff;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.button-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+.button-primary:disabled {
+  background-color: var(--medium-gray);
+  border-color: var(--medium-gray);
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* Results Area */
+.results-container {
+  /* Takes up remaining space in the grid */
+}
+.results-container h2 {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+.results-container hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    margin-bottom: 20px;
+}
+
+/* Loading / Error / No Results */
+.loading-indicator, .error-message, .no-results {
+    padding: 20px;
+    text-align: center;
+    color: var(--dark-gray);
+    background-color: var(--light-gray);
+    border: 1px dashed var(--border-color);
+    border-radius: var(--border-radius);
+    margin-top: 20px;
+}
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* Space Card Grid */
+.space-list-container {
+  display: grid;
+  /* Repeat columns: Auto-fill with min width 300px, max 1fr */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.space-card {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: #fff;
+  overflow: hidden; /* Contain image */
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column; /* Ensure content flows vertically */
+}
+.space-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.space-card-image {
+  width: 100%;
+  height: 200px; /* Consistent image height */
+  overflow: hidden;
+}
+.space-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover area without distortion */
+  display: block;
+}
+
+.space-card-content {
+  padding: 15px;
+  flex-grow: 1; /* Allow content to fill remaining space */
+  display: flex;
+  flex-direction: column;
+}
+
+.space-card-content h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.15em;
+  color: var(--text-color);
+}
+
+/* Meta info (type, capacity, price) */
+.space-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 0.85em;
+  color: var(--dark-gray);
+  margin-bottom: 10px;
+}
+.space-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* Space between icon and text */
+}
+/* Add icon styles if using an icon font/library */
+.icon-type, .icon-capacity, .icon-price, .icon-location {
+    /* Style your icons */
+}
+
+.space-location {
+    font-size: 0.85em;
+    color: var(--dark-gray);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.space-description {
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex-grow: 1; /* Push button to bottom */
+}
+
+/* Amenity Tags/Pills */
+.amenities {
+  margin: 10px 0;
+}
+.amenity-tag {
+  display: inline-block;
+  background-color: var(--medium-gray);
+  color: var(--dark-gray);
+  font-size: 0.75em;
+  padding: 4px 10px;
+  border-radius: 15px; /* Pill shape */
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+/* Booking button */
+.button-book {
+    margin-top: auto; /* Push button to bottom of card content */
+    width: auto; /* Don't make book button full width */
+    align-self: flex-start; /* Align left */
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .page-container {
+    grid-template-columns: 1fr; /* Stack filters above results */
+  }
+  .filter-container {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+    .space-list-container {
+       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+       gap: 20px;
+    }
+    .results-container h2 {
+        font-size: 1.3em;
+    }
+     .page-container {
+        padding: 15px;
+     }
+}
+
+@media (max-width: 480px) {
+    .space-card-content h3 {
+        font-size: 1.05em;
+    }
+    .space-meta {
+        font-size: 0.8em;
+        gap: 10px;
+    }
+}

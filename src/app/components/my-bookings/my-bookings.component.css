@@ -1,0 +1,194 @@
+:host {
+  --primary-color: #007bff;
+  --danger-color: #dc3545;
+  --danger-border: #f5c6cb;
+  --danger-bg-light: #f8d7da;
+  --success-color: #155724;
+  --success-bg: #d4edda;
+  --success-border: #c3e6cb;
+  --cancelled-color: #6c757d;
+  --cancelled-bg: #e9ecef;
+  --cancelled-border: #dee2e6;
+  --border-color: #dee2e6;
+  --border-radius: 0.375rem;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.my-bookings-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.my-bookings-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.success-message,
+.error-message {
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.success-message {
+  color: var(--success-color);
+  background-color: var(--success-bg);
+  border: 1px solid var(--success-border);
+}
+
+.error-message {
+  color: #721c24;
+  background-color: var(--danger-bg-light);
+  border: 1px solid var(--danger-border);
+}
+
+.loading-indicator,
+.no-results {
+  padding: 20px;
+  text-align: center;
+  color: var(--dark-gray, #6c757d);
+  background-color: var(--light-gray, #f8f9fa);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--border-radius);
+  margin-top: 20px;
+}
+
+.no-results a {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--primary-color);
+}
+
+
+.booking-list {
+  display: grid;
+  gap: 20px;
+}
+
+.booking-card {
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+  border-left: 5px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  padding: 15px 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.booking-card.status-confirmed {
+  border-left-color: #28a745;
+}
+
+.booking-card.status-cancelled {
+  border-left-color: var(--cancelled-color);
+  background-color: var(--cancelled-bg);
+}
+
+.booking-card.status-pending_payment {
+  border-left-color: #ffc107;
+}
+
+.booking-card.status-completed {
+  border-left-color: var(--secondary-color, #6c757d);
+  opacity: 0.8;
+}
+
+.booking-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.booking-card-header h3 {
+  margin: 0;
+  font-size: 1.15em;
+}
+
+.booking-status {
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  text-transform: uppercase;
+}
+
+.status-confirmed .booking-status {
+  background-color: #28a745;
+  color: white;
+}
+
+.status-cancelled .booking-status {
+  background-color: var(--cancelled-color);
+  color: white;
+}
+
+.status-pending_payment .booking-status {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.status-completed .booking-status {
+  background-color: var(--secondary-color, #6c757d);
+  color: white;
+}
+
+.booking-card-body p {
+  margin: 5px 0;
+  font-size: 0.95em;
+  color: #555;
+}
+
+.booking-card-body strong {
+  color: #333;
+  min-width: 80px;
+  display: inline-block;
+}
+
+.booking-card-actions {
+  margin-top: 10px;
+  padding-top: 10px;
+  text-align: right;
+}
+
+.info-text {
+  font-size: 0.8em;
+  color: var(--dark-gray);
+  font-style: italic;
+}
+
+.button-danger {
+  display: inline-block;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid var(--danger-color);
+  padding: 6px 12px;
+  font-size: 0.85em;
+  border-radius: var(--border-radius);
+  color: var(--danger-color);
+  background-color: transparent;
+  transition: all .15s ease-in-out;
+}
+
+.button-danger:hover {
+  color: #fff;
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+.button-danger:disabled {
+  color: var(--dark-gray);
+  background-color: var(--medium-gray);
+  border-color: var(--medium-gray);
+  cursor: not-allowed;
+  opacity: 0.65;
+}

@@ -1,0 +1,29 @@
+<header class="app-header">
+  <nav class="navbar">
+    <a class="navbar-brand" routerLink="/">CoWork</a>
+    <div class="nav-links">
+      <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Spaces</a>
+
+      <ng-container *ngIf="!(isLoggedIn$ | async)">
+        <a routerLink="/login" routerLinkActive="active-link">Login</a>
+        <a routerLink="/register" routerLinkActive="active-link">Register</a>
+      </ng-container>
+
+      <ng-container *ngIf="isLoggedIn$ | async">
+        <a routerLink="/my-bookings" routerLinkActive="active-link">My Bookings</a>
+        <button (click)="logout()" class="logout-button">Logout</button>
+      </ng-container>
+
+    </div>
+  </nav>
+</header>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+
+<footer>
+  <hr>
+  <p>© 2025 Your Company Name</p>
+</footer>
